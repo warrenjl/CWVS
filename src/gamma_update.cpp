@@ -25,8 +25,9 @@ arma::vec alpha = gamma%(A11_old*delta1_old);
 arma::vec eta = A21_old*delta1_old +
                 A22_old*delta2_old;
 arma::vec probs(2);
+int p_z = z.n_cols;
 
-for(int j = 0; j < z.n_cols; ++j){
+for(int j = 0; j < p_z; ++j){
 
    pieces.fill(0);
    log_pi(0) = log(1 - R::pnorm(eta(j),

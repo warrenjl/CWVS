@@ -15,8 +15,9 @@ arma::vec gamma_star_update(arma::vec gamma,
 arma::vec gamma_star(gamma.size()); gamma_star.fill(0);
 arma::vec eta = A21_old*delta1_old +
                 A22_old*delta2_old;
+int p_z = gamma.size();
 
-for(int j = 0; j < gamma.size(); ++j){
+for(int j = 0; j < p_z; ++j){
    
    if(gamma(j) == 1){
      while(gamma_star(j) <= 0){
