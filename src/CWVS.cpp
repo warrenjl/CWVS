@@ -302,7 +302,7 @@ for(int j = 1; j < mcmc_samples; ++j){
     Rcpp::Rcout << "A22 Acceptance: " << accrate_A22_trans << "%" << std::endl;
     double accrate_A21_trans = round(100*(acctot_A21/j));
     Rcpp::Rcout << "A21 Acceptance: " << accrate_A21_trans << "%" << std::endl;
-    Rcpp::Rcout << "*******************" << std::endl;
+    Rcpp::Rcout << "********************" << std::endl;
     }
   
   }
