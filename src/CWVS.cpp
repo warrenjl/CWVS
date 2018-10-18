@@ -41,6 +41,7 @@ arma::vec phi2(mcmc_samples); phi2.fill(0);
 arma::vec A11(mcmc_samples); A11.fill(0);
 arma::vec A22(mcmc_samples); A22.fill(0);
 arma::vec A21(mcmc_samples); A21.fill(0);
+arma::mat alpha(z.n_cols, mcmc_samples); alpha.fill(0);
 arma::vec neg_two_loglike(mcmc_samples); neg_two_loglike.fill(0);
 
 //Prior Information
@@ -271,6 +272,9 @@ for(int j = 1; j < mcmc_samples; ++j){
   A21(j) = A21_output[0];
   acctot_A21 = A21_output[1];
   
+  //alpha Update
+  alpha.col(j) = gamma.col(j)%(A11(j)*delta1.col(j));
+  
   //neg_two_loglike Update
   neg_two_loglike(j) = neg_two_loglike_update(y,
                                               x,
@@ -312,6 +316,7 @@ return Rcpp::List::create(Rcpp::Named("beta") = beta,
                           Rcpp::Named("A11") = A11,
                           Rcpp::Named("A22") = A22,
                           Rcpp::Named("A21") = A21,
+                          Rcpp::Named("alpha") = alpha,
                           Rcpp::Named("neg_two_loglike") = neg_two_loglike,
                           Rcpp::Named("acctot_phi1_trans") = acctot_phi1_trans,
                           Rcpp::Named("acctot_phi2_trans") = acctot_phi2_trans,
