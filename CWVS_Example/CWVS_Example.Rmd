@@ -1,14 +1,12 @@
 ---
 output:
-word_document: default
-html_document: default
-pdf_document: default
+  word_document: default
+  pdf_document: default
+  html_document: default
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 # CWVS: Critical Window Variable Selection
 ## CWVS_Example
 
