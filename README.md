@@ -1,2 +1,3 @@
-# CWVS
-Critical Window Variable Selection
+# CWVS: Critical Window Variable Selection
+
+This package implements a hierarchical Bayesian logistic regression analysis to identify/estimate critical windows of susceptibility corresponding to exposure from a single time-varying covariate. The method involves temporally smoothed Bayesian variable selection, with correlated Gaussian process smoothness in the risk and variable selection parameters, and is fit using Markov chain Monte Carlo sampling techniques. Please see the "CWVS_Example" folder for more specific information regarding package use details.
