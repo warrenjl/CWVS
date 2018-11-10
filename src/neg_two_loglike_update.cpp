@@ -15,12 +15,12 @@ double neg_two_loglike_update(arma::vec y,
                               arma::vec delta1){
 
 int n = y.size();
-arma::vec dens(n); dens.fill(0);
+arma::vec dens(n); dens.fill(0.00);
 
 arma::vec logit_probs = x*beta + 
                         z*(gamma%(A11*delta1));
 
-arma::vec probs = exp(logit_probs)/(1 + exp(logit_probs));
+arma::vec probs = exp(logit_probs)/(1.00 + exp(logit_probs));
 
 for(int j = 0; j < n; ++j){
    dens(j) = R::dbinom(y(j),

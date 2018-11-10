@@ -32,20 +32,20 @@ Rcpp::List CWVS(int mcmc_samples,
                 Rcpp::Nullable<double> A21_init = R_NilValue){
 
 //Defining Parameters and Quantities of Interest
-arma::mat beta(x.n_cols, mcmc_samples); beta.fill(0);
-arma::mat gamma(z.n_cols, mcmc_samples); gamma.fill(0);
-arma::mat delta1(z.n_cols, mcmc_samples); delta1.fill(0);
-arma::mat delta2(z.n_cols, mcmc_samples); delta2.fill(0);
-arma::vec phi1(mcmc_samples); phi1.fill(0);
-arma::vec phi2(mcmc_samples); phi2.fill(0);
-arma::vec A11(mcmc_samples); A11.fill(0);
-arma::vec A22(mcmc_samples); A22.fill(0);
-arma::vec A21(mcmc_samples); A21.fill(0);
-arma::mat alpha(z.n_cols, mcmc_samples); alpha.fill(0);
-arma::vec neg_two_loglike(mcmc_samples); neg_two_loglike.fill(0);
+arma::mat beta(x.n_cols, mcmc_samples); beta.fill(0.00);
+arma::mat gamma(z.n_cols, mcmc_samples); gamma.fill(0.00);
+arma::mat delta1(z.n_cols, mcmc_samples); delta1.fill(0.00);
+arma::mat delta2(z.n_cols, mcmc_samples); delta2.fill(0.00);
+arma::vec phi1(mcmc_samples); phi1.fill(0.00);
+arma::vec phi2(mcmc_samples); phi2.fill(0.00);
+arma::vec A11(mcmc_samples); A11.fill(0.00);
+arma::vec A22(mcmc_samples); A22.fill(0.00);
+arma::vec A21(mcmc_samples); A21.fill(0.00);
+arma::mat alpha(z.n_cols, mcmc_samples); alpha.fill(0.00);
+arma::vec neg_two_loglike(mcmc_samples); neg_two_loglike.fill(0.00);
 
 //Prior Information
-double sigma2_beta = 10000;
+double sigma2_beta = 10000.00;
 if(sigma2_beta_prior.isNotNull()){
   sigma2_beta = Rcpp::as<double>(sigma2_beta_prior);
   }
@@ -76,22 +76,22 @@ if(sigma2_A_prior.isNotNull()){
   }
 
 //Initial Values
-beta.col(0).fill(0);
+beta.col(0).fill(0.00);
 if(beta_init.isNotNull()){
   beta.col(0) = Rcpp::as<arma::vec>(beta_init);
   }
 
-gamma.col(0).fill(1);
+gamma.col(0).fill(1.00);
 if(gamma_init.isNotNull()){
   gamma.col(0) = Rcpp::as<arma::vec>(gamma_init);
   }
 
-delta1.col(0).fill(0);
+delta1.col(0).fill(0.00);
 if(delta1_init.isNotNull()){
   delta1.col(0) = Rcpp::as<arma::vec>(delta1_init);
   }
 
-delta2.col(0).fill(0);
+delta2.col(0).fill(0.00);
 if(delta2_init.isNotNull()){
   delta2.col(0) = Rcpp::as<arma::vec>(delta2_init);
   }
@@ -132,11 +132,11 @@ neg_two_loglike(0) = neg_two_loglike_update(y,
                                             delta1.col(0));
 
 //Metropolis Settings
-double acctot_phi1_trans = 0;
-double acctot_phi2_trans = 0;
-double acctot_A11_trans = 0;
-double acctot_A22_trans = 0;
-double acctot_A21 = 0;
+int acctot_phi1_trans = 0;
+int acctot_phi2_trans = 0;
+int acctot_A11_trans = 0;
+int acctot_A22_trans = 0;
+int acctot_A21 = 0;
 
 //Main Sampling Loop
 for(int j = 1; j < mcmc_samples; ++j){
@@ -292,15 +292,15 @@ for(int j = 1; j < mcmc_samples; ++j){
   if(((j + 1) % int(round(mcmc_samples*0.10)) == 0)){
     double completion = round(100*((j + 1)/(double)mcmc_samples));
     Rcpp::Rcout << "Progress: " << completion << "%" << std::endl;
-    double accrate_phi1_trans = round(100*(acctot_phi1_trans/j));
+    double accrate_phi1_trans = round(100*(acctot_phi1_trans/(double)j));
     Rcpp::Rcout << "phi1 Acceptance: " << accrate_phi1_trans << "%" << std::endl;
-    double accrate_phi2_trans = round(100*(acctot_phi2_trans/j));
+    double accrate_phi2_trans = round(100*(acctot_phi2_trans/(double)j));
     Rcpp::Rcout << "phi2 Acceptance: " << accrate_phi2_trans << "%" << std::endl;
-    double accrate_A11_trans = round(100*(acctot_A11_trans/j));
+    double accrate_A11_trans = round(100*(acctot_A11_trans/(double)j));
     Rcpp::Rcout << "A11 Acceptance: " << accrate_A11_trans << "%" << std::endl;
-    double accrate_A22_trans = round(100*(acctot_A22_trans/j));
+    double accrate_A22_trans = round(100*(acctot_A22_trans/(double)j));
     Rcpp::Rcout << "A22 Acceptance: " << accrate_A22_trans << "%" << std::endl;
-    double accrate_A21_trans = round(100*(acctot_A21/j));
+    double accrate_A21_trans = round(100*(acctot_A21/(double)j));
     Rcpp::Rcout << "A21 Acceptance: " << accrate_A21_trans << "%" << std::endl;
     Rcpp::Rcout << "********************" << std::endl;
     }

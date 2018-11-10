@@ -61,7 +61,7 @@ Rcpp::List phi_update(double phi_old,
                       double alpha_phi,
                       double beta_phi,
                       double metrop_var_phi_trans,
-                      double acctot_phi_trans);
+                      int acctot_phi_trans);
 
 arma::vec delta2_update(arma::vec gamma_star,
                         arma::vec delta1,
@@ -79,7 +79,7 @@ Rcpp::List A11_update(double A11_old,
                       arma::vec delta1,
                       double sigma2_A,
                       double metrop_var_A11_trans,
-                      double acctot_A11_trans);
+                      int acctot_A11_trans);
 
 Rcpp::List A22_update(double A22_old,
                       arma::vec gamma_star,
@@ -88,7 +88,7 @@ Rcpp::List A22_update(double A22_old,
                       arma::vec delta2,
                       double sigma2_A,
                       double metrop_var_A22_trans,
-                      double acctot_A22_trans);
+                      int acctot_A22_trans);
 
 Rcpp::List A21_update(double A21_old,
                       arma::vec gamma_star,
@@ -97,7 +97,7 @@ Rcpp::List A21_update(double A21_old,
                       arma::vec delta2,
                       double sigma2_A,
                       double metrop_var_A21,
-                      double acctot_A21);
+                      int acctot_A21);
 
 double neg_two_loglike_update(arma::vec y,
                               arma::mat x,

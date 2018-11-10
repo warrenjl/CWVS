@@ -12,7 +12,7 @@ Rcpp::List phi_update(double phi_old,
                       double alpha_phi,
                       double beta_phi,
                       double metrop_var_phi_trans,
-                      double acctot_phi_trans){
+                      int acctot_phi_trans){
 
 /*Second*/
 Rcpp::List temporal_corr_info_old = temporal_corr_info;
@@ -40,8 +40,8 @@ double first = -0.50*log_deter -
 
 /*Decision*/
 double ratio = exp(first - second);   
-double acc = 1;
-if(ratio < R::runif(0, 1)){
+int acc = 1;
+if(ratio < R::runif(0.00, 1.00)){
   phi = phi_old;
   temporal_corr_info = temporal_corr_info_old;
   acc = 0;

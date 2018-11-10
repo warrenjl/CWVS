@@ -18,8 +18,8 @@ arma::vec gamma_update(arma::mat x,
                        double A22_old,
                        arma::vec delta2_old){
  
-arma::vec pieces(2); pieces.fill(0);
-arma::vec log_pi(2); log_pi.fill(0);
+arma::vec pieces(2); pieces.fill(0.00);
+arma::vec log_pi(2); log_pi.fill(0.00);
 arma::vec gamma = gamma_old;
 arma::vec alpha = gamma%(A11_old*delta1_old);
 arma::vec eta = A21_old*delta1_old +
@@ -29,15 +29,15 @@ int p_z = z.n_cols;
 
 for(int j = 0; j < p_z; ++j){
 
-   pieces.fill(0);
+   pieces.fill(0.00);
    log_pi(0) = log(1 - R::pnorm(eta(j),
-                                0,
-                                1,
+                                0.00,
+                                1.00,
                                 true,
                                 false));
    log_pi(1) = log(R::pnorm(eta(j),
-                            0,
-                            1,
+                            0.00,
+                            1.00,
                             true,
                             false));
    
@@ -54,7 +54,7 @@ for(int j = 0; j < p_z; ++j){
       probs(k) = 1/(sum(exp(pieces - pieces(k))));
   
       if(arma::is_finite(probs(k)) == 0){
-        probs(k) = 0;  /*Computational Correction*/
+        probs(k) = 0.00;  /*Computational Correction*/
         }
       }
 
