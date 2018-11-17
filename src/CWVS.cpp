@@ -96,12 +96,12 @@ if(delta2_init.isNotNull()){
   delta2.col(0) = Rcpp::as<arma::vec>(delta2_init);
   }
 
-phi1(0) = 1.00;
+phi1(0) = 0.10;
 if(phi1_init.isNotNull()){
   phi1(0) = Rcpp::as<double>(phi1_init);
   }
 
-phi2(0) = 1.00;
+phi2(0) = 0.10;
 if(phi2_init.isNotNull()){
   phi2(0) = Rcpp::as<double>(phi2_init);
   }
