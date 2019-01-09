@@ -32,16 +32,18 @@ Rcpp::List CWVS(int mcmc_samples,
                 Rcpp::Nullable<double> A21_init = R_NilValue){
 
 //Defining Parameters and Quantities of Interest
-arma::mat beta(x.n_cols, mcmc_samples); beta.fill(0.00);
-arma::mat gamma(z.n_cols, mcmc_samples); gamma.fill(0.00);
-arma::mat delta1(z.n_cols, mcmc_samples); delta1.fill(0.00);
-arma::mat delta2(z.n_cols, mcmc_samples); delta2.fill(0.00);
+int p_x = x.n_cols;
+int p_z = z.n_cols;
+arma::mat beta(p_x, mcmc_samples); beta.fill(0.00);
+arma::mat gamma(p_z, mcmc_samples); gamma.fill(0.00);
+arma::mat delta1(p_z, mcmc_samples); delta1.fill(0.00);
+arma::mat delta2(p_z, mcmc_samples); delta2.fill(0.00);
 arma::vec phi1(mcmc_samples); phi1.fill(0.00);
 arma::vec phi2(mcmc_samples); phi2.fill(0.00);
 arma::vec A11(mcmc_samples); A11.fill(0.00);
 arma::vec A22(mcmc_samples); A22.fill(0.00);
 arma::vec A21(mcmc_samples); A21.fill(0.00);
-arma::mat alpha(z.n_cols, mcmc_samples); alpha.fill(0.00);
+arma::mat alpha(p_z, mcmc_samples); alpha.fill(0.00);
 arma::vec neg_two_loglike(mcmc_samples); neg_two_loglike.fill(0.00);
 
 //Prior Information
@@ -121,8 +123,8 @@ if(A21_init.isNotNull()){
   A21(0) = Rcpp::as<double>(A21_init);
   }
 
-Rcpp::List temporal_corr_info1 = temporal_corr_fun(z.n_cols, phi1(0));
-Rcpp::List temporal_corr_info2 = temporal_corr_fun(z.n_cols, phi2(0));
+Rcpp::List temporal_corr_info1 = temporal_corr_fun(p_z, phi1(0));
+Rcpp::List temporal_corr_info2 = temporal_corr_fun(p_z, phi2(0));
 neg_two_loglike(0) = neg_two_loglike_update(y,
                                             x,
                                             z, 

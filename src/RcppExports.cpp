@@ -63,24 +63,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// beta_update
-arma::vec beta_update(arma::mat x, arma::mat z, double sigma2_beta, arma::vec w, arma::vec gamma_l, arma::vec gamma_old, double A11_old, arma::vec delta1_old);
-RcppExport SEXP _CWVS_beta_update(SEXP xSEXP, SEXP zSEXP, SEXP sigma2_betaSEXP, SEXP wSEXP, SEXP gamma_lSEXP, SEXP gamma_oldSEXP, SEXP A11_oldSEXP, SEXP delta1_oldSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type z(zSEXP);
-    Rcpp::traits::input_parameter< double >::type sigma2_beta(sigma2_betaSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type gamma_l(gamma_lSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type gamma_old(gamma_oldSEXP);
-    Rcpp::traits::input_parameter< double >::type A11_old(A11_oldSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type delta1_old(delta1_oldSEXP);
-    rcpp_result_gen = Rcpp::wrap(beta_update(x, z, sigma2_beta, w, gamma_l, gamma_old, A11_old, delta1_old));
-    return rcpp_result_gen;
-END_RCPP
-}
 // CWVS
 Rcpp::List CWVS(int mcmc_samples, arma::vec y, arma::mat x, arma::mat z, double metrop_var_phi1_trans, double metrop_var_phi2_trans, double metrop_var_A11_trans, double metrop_var_A22_trans, double metrop_var_A21, Rcpp::Nullable<double> sigma2_beta_prior, Rcpp::Nullable<double> alpha_phi1_prior, Rcpp::Nullable<double> beta_phi1_prior, Rcpp::Nullable<double> alpha_phi2_prior, Rcpp::Nullable<double> beta_phi2_prior, Rcpp::Nullable<double> sigma2_A_prior, Rcpp::Nullable<Rcpp::NumericVector> beta_init, Rcpp::Nullable<Rcpp::NumericVector> gamma_init, Rcpp::Nullable<Rcpp::NumericVector> delta1_init, Rcpp::Nullable<Rcpp::NumericVector> delta2_init, Rcpp::Nullable<double> phi1_init, Rcpp::Nullable<double> phi2_init, Rcpp::Nullable<double> A11_init, Rcpp::Nullable<double> A22_init, Rcpp::Nullable<double> A21_init);
 RcppExport SEXP _CWVS_CWVS(SEXP mcmc_samplesSEXP, SEXP ySEXP, SEXP xSEXP, SEXP zSEXP, SEXP metrop_var_phi1_transSEXP, SEXP metrop_var_phi2_transSEXP, SEXP metrop_var_A11_transSEXP, SEXP metrop_var_A22_transSEXP, SEXP metrop_var_A21SEXP, SEXP sigma2_beta_priorSEXP, SEXP alpha_phi1_priorSEXP, SEXP beta_phi1_priorSEXP, SEXP alpha_phi2_priorSEXP, SEXP beta_phi2_priorSEXP, SEXP sigma2_A_priorSEXP, SEXP beta_initSEXP, SEXP gamma_initSEXP, SEXP delta1_initSEXP, SEXP delta2_initSEXP, SEXP phi1_initSEXP, SEXP phi2_initSEXP, SEXP A11_initSEXP, SEXP A22_initSEXP, SEXP A21_initSEXP) {
@@ -112,6 +94,24 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::Nullable<double> >::type A22_init(A22_initSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<double> >::type A21_init(A21_initSEXP);
     rcpp_result_gen = Rcpp::wrap(CWVS(mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, metrop_var_A21, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init));
+    return rcpp_result_gen;
+END_RCPP
+}
+// beta_update
+arma::vec beta_update(arma::mat x, arma::mat z, double sigma2_beta, arma::vec w, arma::vec gamma_l, arma::vec gamma_old, double A11_old, arma::vec delta1_old);
+RcppExport SEXP _CWVS_beta_update(SEXP xSEXP, SEXP zSEXP, SEXP sigma2_betaSEXP, SEXP wSEXP, SEXP gamma_lSEXP, SEXP gamma_oldSEXP, SEXP A11_oldSEXP, SEXP delta1_oldSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type z(zSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma2_beta(sigma2_betaSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type gamma_l(gamma_lSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type gamma_old(gamma_oldSEXP);
+    Rcpp::traits::input_parameter< double >::type A11_old(A11_oldSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type delta1_old(delta1_oldSEXP);
+    rcpp_result_gen = Rcpp::wrap(beta_update(x, z, sigma2_beta, w, gamma_l, gamma_old, A11_old, delta1_old));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -268,8 +268,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_CWVS_A11_update", (DL_FUNC) &_CWVS_A11_update, 11},
     {"_CWVS_A21_update", (DL_FUNC) &_CWVS_A21_update, 8},
     {"_CWVS_A22_update", (DL_FUNC) &_CWVS_A22_update, 8},
-    {"_CWVS_beta_update", (DL_FUNC) &_CWVS_beta_update, 8},
     {"_CWVS_CWVS", (DL_FUNC) &_CWVS_CWVS, 24},
+    {"_CWVS_beta_update", (DL_FUNC) &_CWVS_beta_update, 8},
     {"_CWVS_delta1_update", (DL_FUNC) &_CWVS_delta1_update, 12},
     {"_CWVS_delta2_update", (DL_FUNC) &_CWVS_delta2_update, 5},
     {"_CWVS_gamma_star_update", (DL_FUNC) &_CWVS_gamma_star_update, 5},
