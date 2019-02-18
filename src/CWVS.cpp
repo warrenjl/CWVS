@@ -34,6 +34,7 @@ Rcpp::List CWVS(int mcmc_samples,
 //Defining Parameters and Quantities of Interest
 int p_x = x.n_cols;
 int p_z = z.n_cols;
+double max_time = (p_z - 1);
 arma::mat beta(p_x, mcmc_samples); beta.fill(0.00);
 arma::mat gamma(p_z, mcmc_samples); gamma.fill(0.00);
 arma::mat delta1(p_z, mcmc_samples); delta1.fill(0.00);
@@ -98,12 +99,12 @@ if(delta2_init.isNotNull()){
   delta2.col(0) = Rcpp::as<arma::vec>(delta2_init);
   }
 
-phi1(0) = 0.10;
+phi1(0) = -log(0.05)/max_time;  //Effective range equal to largest temporal distance in dataset (strong temporal correlation)
 if(phi1_init.isNotNull()){
   phi1(0) = Rcpp::as<double>(phi1_init);
   }
 
-phi2(0) = 0.10;
+phi2(0) = -log(0.05)/max_time;  //Effective range equal to largest temporal distance in dataset (strong temporal correlation)
 if(phi2_init.isNotNull()){
   phi2(0) = Rcpp::as<double>(phi2_init);
   }
