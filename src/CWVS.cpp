@@ -209,7 +209,7 @@ for(int j = 1; j < mcmc_samples; ++j){
                                       metrop_var_phi1_trans,
                                       acctot_phi1_trans);
   
-  phi1(j) = phi1_output[0];
+  phi1(j) = Rcpp::as<double>(phi1_output[0]);
   acctot_phi1_trans = phi1_output[1];
   temporal_corr_info1 = phi1_output[2];
 
@@ -229,7 +229,7 @@ for(int j = 1; j < mcmc_samples; ++j){
                                       metrop_var_phi2_trans,
                                       acctot_phi2_trans);
   
-  phi2(j) = phi2_output[0];
+  phi2(j) = Rcpp::as<double>(phi2_output[0]);
   acctot_phi2_trans = phi2_output[1];
   temporal_corr_info2 = phi2_output[2];
   
@@ -246,7 +246,7 @@ for(int j = 1; j < mcmc_samples; ++j){
                                      metrop_var_A11_trans,
                                      acctot_A11_trans);
   
-  A11(j) = A11_output[0];
+  A11(j) = Rcpp::as<double>(A11_output[0]);
   acctot_A11_trans = A11_output[1];
   
   //A22 Update
@@ -259,7 +259,7 @@ for(int j = 1; j < mcmc_samples; ++j){
                                      metrop_var_A22_trans,
                                      acctot_A22_trans);
   
-  A22(j) = A22_output[0];
+  A22(j) = Rcpp::as<double>(A22_output[0]);
   acctot_A22_trans = A22_output[1];
   
   //A21 Update
@@ -272,7 +272,7 @@ for(int j = 1; j < mcmc_samples; ++j){
                                      metrop_var_A21,
                                      acctot_A21);
   
-  A21(j) = A21_output[0];
+  A21(j) = Rcpp::as<double>(A21_output[0]);
   acctot_A21 = A21_output[1];
   
   //alpha Update
