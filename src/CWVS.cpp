@@ -14,7 +14,6 @@ Rcpp::List CWVS(int mcmc_samples,
                 double metrop_var_phi2_trans,
                 double metrop_var_A11_trans,
                 double metrop_var_A22_trans,
-                double metrop_var_A21,
                 Rcpp::Nullable<double> sigma2_beta_prior = R_NilValue,
                 Rcpp::Nullable<double> alpha_phi1_prior = R_NilValue,
                 Rcpp::Nullable<double> beta_phi1_prior = R_NilValue,
@@ -139,7 +138,6 @@ int acctot_phi1_trans = 0;
 int acctot_phi2_trans = 0;
 int acctot_A11_trans = 0;
 int acctot_A22_trans = 0;
-int acctot_A21 = 0;
 
 //Main Sampling Loop
 for(int j = 1; j < mcmc_samples; ++j){
@@ -263,17 +261,11 @@ for(int j = 1; j < mcmc_samples; ++j){
   acctot_A22_trans = A22_output[1];
   
   //A21 Update
-  Rcpp::List A21_output = A21_update(A21(j-1),
-                                     gamma_star,
-                                     delta1.col(j),
-                                     A22(j),
-                                     delta2.col(j),
-                                     sigma2_A,
-                                     metrop_var_A21,
-                                     acctot_A21);
-  
-  A21(j) = Rcpp::as<double>(A21_output[0]);
-  acctot_A21 = A21_output[1];
+  A21(j) = A21_update(gamma_star,
+                      delta1.col(j),
+                      A22(j),
+                      delta2.col(j),
+                      sigma2_A);
   
   //alpha Update
   alpha.col(j) = gamma.col(j)%(A11(j)*delta1.col(j));
@@ -303,8 +295,6 @@ for(int j = 1; j < mcmc_samples; ++j){
     Rcpp::Rcout << "A11 Acceptance: " << accrate_A11_trans << "%" << std::endl;
     double accrate_A22_trans = round(100*(acctot_A22_trans/(double)j));
     Rcpp::Rcout << "A22 Acceptance: " << accrate_A22_trans << "%" << std::endl;
-    double accrate_A21_trans = round(100*(acctot_A21/(double)j));
-    Rcpp::Rcout << "A21 Acceptance: " << accrate_A21_trans << "%" << std::endl;
     Rcpp::Rcout << "********************" << std::endl;
     }
   
@@ -324,7 +314,6 @@ return Rcpp::List::create(Rcpp::Named("beta") = beta,
                           Rcpp::Named("acctot_phi1_trans") = acctot_phi1_trans,
                           Rcpp::Named("acctot_phi2_trans") = acctot_phi2_trans,
                           Rcpp::Named("acctot_A11_trans") = acctot_A11_trans,
-                          Rcpp::Named("acctot_A22_trans") = acctot_A22_trans,
-                          Rcpp::Named("acctot_A21") = acctot_A21);
+                          Rcpp::Named("acctot_A22_trans") = acctot_A22_trans);
 
 }

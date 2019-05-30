@@ -5,16 +5,16 @@ A11_update <- function(A11_old, x, z, w, gamma_l, beta, gamma, delta1, sigma2_A,
     .Call(`_CWVS_A11_update`, A11_old, x, z, w, gamma_l, beta, gamma, delta1, sigma2_A, metrop_var_A11_trans, acctot_A11_trans)
 }
 
-A21_update <- function(A21_old, gamma_star, delta1, A22, delta2, sigma2_A, metrop_var_A21, acctot_A21) {
-    .Call(`_CWVS_A21_update`, A21_old, gamma_star, delta1, A22, delta2, sigma2_A, metrop_var_A21, acctot_A21)
+A21_update <- function(gamma_star, delta1, A22, delta2, sigma2_A) {
+    .Call(`_CWVS_A21_update`, gamma_star, delta1, A22, delta2, sigma2_A)
 }
 
 A22_update <- function(A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, metrop_var_A22_trans, acctot_A22_trans) {
     .Call(`_CWVS_A22_update`, A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, metrop_var_A22_trans, acctot_A22_trans)
 }
 
-CWVS <- function(mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, metrop_var_A21, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
-    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, metrop_var_A21, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
+CWVS <- function(mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
+    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
 }
 
 beta_update <- function(x, z, sigma2_beta, w, gamma_l, gamma_old, A11_old, delta1_old) {

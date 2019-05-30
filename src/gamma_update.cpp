@@ -30,11 +30,11 @@ int p_z = z.n_cols;
 for(int j = 0; j < p_z; ++j){
 
    pieces.fill(0.00);
-   log_pi(0) = log(1 - R::pnorm(eta(j),
-                                0.00,
-                                1.00,
-                                true,
-                                false));
+   log_pi(0) = log(1.00 - R::pnorm(eta(j),
+                                   0.00,
+                                   1.00,
+                                   true,
+                                   false));
    log_pi(1) = log(R::pnorm(eta(j),
                             0.00,
                             1.00,
@@ -53,7 +53,7 @@ for(int j = 0; j < p_z; ++j){
    for(int k = 0; k < 2; ++k){
       probs(k) = 1/(sum(exp(pieces - pieces(k))));
   
-      if(arma::is_finite(probs(k)) == 0){
+      if(arma::is_finite(probs(k)) == 0.00){
         probs(k) = 0.00;  /*Computational Correction*/
         }
       }

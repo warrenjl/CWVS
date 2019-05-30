@@ -90,14 +90,11 @@ Rcpp::List A22_update(double A22_old,
                       double metrop_var_A22_trans,
                       int acctot_A22_trans);
 
-Rcpp::List A21_update(double A21_old,
-                      arma::vec gamma_star,
-                      arma::vec delta1,
-                      double A22,
-                      arma::vec delta2,
-                      double sigma2_A,
-                      double metrop_var_A21,
-                      int acctot_A21);
+double A21_update(arma::vec gamma_star,
+                  arma::vec delta1,
+                  double A22,
+                  arma::vec delta2,
+                  double sigma2_A);
 
 double neg_two_loglike_update(arma::vec y,
                               arma::mat x,
@@ -115,7 +112,6 @@ Rcpp::List CWVS(int mcmc_samples,
                 double metrop_var_phi2_trans,
                 double metrop_var_A11_trans,
                 double metrop_var_A22_trans,
-                double metrop_var_A21,
                 Rcpp::Nullable<double> sigma2_beta_prior,
                 Rcpp::Nullable<double> alpha_phi1_prior,
                 Rcpp::Nullable<double> beta_phi1_prior,
