@@ -48,10 +48,10 @@ for(int j = 0; j < p_z; ++j){
                   log_pi(k);
       }
 
-   probs.fill(0);
+   probs.fill(0.00);
 
    for(int k = 0; k < 2; ++k){
-      probs(k) = 1/(sum(exp(pieces - pieces(k))));
+      probs(k) = 1.00/(sum(exp(pieces - pieces(k))));
   
       if(arma::is_finite(probs(k)) == 0.00){
         probs(k) = 0.00;  /*Computational Correction*/
