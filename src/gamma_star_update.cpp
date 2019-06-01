@@ -27,7 +27,7 @@ for(int j = 0; j < p_z; ++j){
      }
    
    if(gamma(j) == 0.00){
-     while(gamma_star(j) > 0.00){
+     while(gamma_star(j) >= 0.00){
           gamma_star(j) = R::rnorm(eta(j),
                                    sqrt(1.00));
           }
