@@ -62,8 +62,8 @@ results<-CWVS(mcmc_samples = 10000,
               y = y, x = x, z = z,
               metrop_var_phi1_trans = 1.00,
               metrop_var_phi2_trans = 1.00,
-              metrop_var_A11_trans = 0.05,
-              metrop_var_A22_trans = 1.00)
+              metrop_var_A11_trans = 0.03,
+              metrop_var_A22_trans = 0.30)
 
 plot(results$beta[1, 1001:10000],
      type="l",

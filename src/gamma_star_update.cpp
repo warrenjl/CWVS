@@ -20,17 +20,17 @@ int p_z = gamma.size();
 for(int j = 0; j < p_z; ++j){
    
    if(gamma(j) == 1.00){
-     while(gamma_star(j) <= 0.00){
-          gamma_star(j) = R::rnorm(eta(j),
-                                   sqrt(1.00));
-          }
+     gamma_star(j) = rnorm_trunc(eta(j),
+                                 1.00,
+                                 0.00,
+                                 datum::inf);
      }
    
    if(gamma(j) == 0.00){
-     while(gamma_star(j) >= 0.00){
-          gamma_star(j) = R::rnorm(eta(j),
-                                   sqrt(1.00));
-          }
+     gamma_star(j) = rnorm_trunc(eta(j),
+                                 1.00,
+                                 -datum::inf,
+                                 0.00);
      }
    
    }

@@ -29,6 +29,10 @@ delta2_update <- function(gamma_star, delta1, A21_old, A22_old, corr_inv2) {
     .Call(`_CWVS_delta2_update`, gamma_star, delta1, A21_old, A22_old, corr_inv2)
 }
 
+exp_rs <- function(a, b) {
+    .Call(`_CWVS_exp_rs`, a, b)
+}
+
 gamma_star_update <- function(gamma, delta1_old, A21_old, A22_old, delta2_old) {
     .Call(`_CWVS_gamma_star_update`, gamma, delta1_old, A21_old, A22_old, delta2_old)
 }
@@ -37,8 +41,16 @@ gamma_update <- function(x, z, w, gamma_l, beta, gamma_old, A11_old, delta1_old,
     .Call(`_CWVS_gamma_update`, x, z, w, gamma_l, beta, gamma_old, A11_old, delta1_old, A21_old, A22_old, delta2_old)
 }
 
+half_norm_rs <- function(a, b) {
+    .Call(`_CWVS_half_norm_rs`, a, b)
+}
+
 neg_two_loglike_update <- function(y, x, z, beta, gamma, A11, delta1) {
     .Call(`_CWVS_neg_two_loglike_update`, y, x, z, beta, gamma, A11, delta1)
+}
+
+norm_rs <- function(a, b) {
+    .Call(`_CWVS_norm_rs`, a, b)
 }
 
 phi_update <- function(phi_old, delta, temporal_corr_info, alpha_phi, beta_phi, metrop_var_phi_trans, acctot_phi_trans) {
@@ -49,8 +61,16 @@ rcpp_pgdraw <- function(b, c) {
     .Call(`_CWVS_rcpp_pgdraw`, b, c)
 }
 
+rnorm_trunc <- function(mu, sigma, lower, upper) {
+    .Call(`_CWVS_rnorm_trunc`, mu, sigma, lower, upper)
+}
+
 temporal_corr_fun <- function(p_z, phi) {
     .Call(`_CWVS_temporal_corr_fun`, p_z, phi)
+}
+
+unif_rs <- function(a, b) {
+    .Call(`_CWVS_unif_rs`, a, b)
 }
 
 w_update <- function(y, x, z, beta_old, gamma_old, A11_old, delta1_old) {

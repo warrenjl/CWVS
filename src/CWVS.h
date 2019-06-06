@@ -1,6 +1,23 @@
 #ifndef __CWVS__
 #define __CWVS__
 
+double rnorm_trunc(double mu, 
+                   double sigma, 
+                   double lower, 
+                   double upper);
+
+double norm_rs(double a, 
+               double b);
+
+double half_norm_rs(double a, 
+                    double b);
+
+double unif_rs(double a, 
+               double b);
+
+double exp_rs(double a, 
+              double b);
+
 arma::vec rcpp_pgdraw(double b, 
                       arma::vec c);
 
