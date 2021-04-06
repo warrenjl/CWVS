@@ -53,10 +53,6 @@ $\phi_k \stackrel{\text{iid}}{\sim}\text{Gamma}\left(\alpha_{\phi_k}, \beta_{\ph
 
 * $\delta_{k}\left(j\right) = 0$ for all $j$, $k$;
 
-* $\sigma^2_{\theta} = 1.00$;
-
-* $\sigma^2_{\eta} = 1.00$;
-
 * $\phi_k = -\ln\left(0.05\right)/\left(m - 1\right)$ for all $k$;
 
 * $A_{kk} = 1$ for all $k$;
