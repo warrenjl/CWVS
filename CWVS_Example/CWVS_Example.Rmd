@@ -60,6 +60,7 @@ y<-rbinom(n=n,
 ```{r echo=TRUE}
 results<-CWVS(mcmc_samples = 10000,
               y = y, x = x, z = z,
+              likelihood_indicator = 0,
               metrop_var_phi1_trans = 1.00,
               metrop_var_phi2_trans = 1.00,
               metrop_var_A11_trans = 0.03,

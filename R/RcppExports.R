@@ -13,8 +13,8 @@ A22_update <- function(A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, m
     .Call(`_CWVS_A22_update`, A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, metrop_var_A22_trans, acctot_A22_trans)
 }
 
-CWVS <- function(mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
-    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
+CWVS <- function(mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, a_sigma2_epsilon_prior = NULL, b_sigma2_epsilon_prior = NULL, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, sigma2_epsilon_init = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
+    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, a_sigma2_epsilon_prior, b_sigma2_epsilon_prior, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, sigma2_epsilon_init, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
 }
 
 beta_update <- function(x, z, sigma2_beta, w, gamma_l, gamma_old, A11_old, delta1_old) {
@@ -45,8 +45,8 @@ half_norm_rs <- function(a, b) {
     .Call(`_CWVS_half_norm_rs`, a, b)
 }
 
-neg_two_loglike_update <- function(y, x, z, beta, gamma, A11, delta1) {
-    .Call(`_CWVS_neg_two_loglike_update`, y, x, z, beta, gamma, A11, delta1)
+neg_two_loglike_update <- function(y, x, z, likelihood_indicator, sigma2_epsilon, beta, gamma, A11, delta1) {
+    .Call(`_CWVS_neg_two_loglike_update`, y, x, z, likelihood_indicator, sigma2_epsilon, beta, gamma, A11, delta1)
 }
 
 norm_rs <- function(a, b) {
@@ -63,6 +63,10 @@ rcpp_pgdraw <- function(b, c) {
 
 rnorm_trunc <- function(mu, sigma, lower, upper) {
     .Call(`_CWVS_rnorm_trunc`, mu, sigma, lower, upper)
+}
+
+sigma2_epsilon_update <- function(a_sigma2_epsilon, b_sigma2_epsilon, y, x, z, beta_old, gamma_old, A11_old, delta1_old) {
+    .Call(`_CWVS_sigma2_epsilon_update`, a_sigma2_epsilon, b_sigma2_epsilon, y, x, z, beta_old, gamma_old, A11_old, delta1_old)
 }
 
 temporal_corr_fun <- function(p_z, phi) {

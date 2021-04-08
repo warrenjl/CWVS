@@ -58,3 +58,16 @@ $\phi_k \stackrel{\text{iid}}{\sim}\text{Gamma}\left(\alpha_{\phi_k}, \beta_{\ph
 * $A_{kk} = 1$ for all $k$;
 
 * $A_{21} = 0$.
+
+## Alternate Likelihood
+$Y_i|\boldsymbol{\beta}, \boldsymbol{\theta}, \sigma^2_{\epsilon} \stackrel{\text{ind}}{\sim} \text{Normal}\left(\textbf{x}_{i}^{\text{T}} \boldsymbol{\beta} + \sum_{j=1}^{m_{i}} \text{z}_{ij} \alpha\left(j\right), \sigma^2_{\epsilon}\right),\ i=1,...,n.$
+
+* $\sigma^2_{\epsilon} \sim \text{Inverse Gamma}\left(a_{\sigma^2_{\epsilon}}, b_{\sigma^2_{\epsilon}}\right);$ 
+
+* Default setting: $a_{\sigma^2_{\epsilon}} = 0.01$, $b_{\sigma^2_{\epsilon}} = 0.01$; 
+
+* Default initial value: $\sigma^2_{\epsilon} = 1.00$;
+
+* likelihood_indicator $= 0$: Bernoulli; 
+
+* likelihood_indicator $= 1$: Gaussian.
