@@ -4,3 +4,4 @@ This package implements a hierarchical Bayesian logistic regression analysis to 
 
 # Reference
 * Warren JL, Kong W, Luben TJ, and Chang HH (2020). Critical window variable selection: estimating the impact of air pollution on very preterm birth. Biostatistics, 21(4):790-806.
+* https://academic.oup.com/biostatistics/article-abstract/21/4/790/5432287?redirectedFrom=fulltext
