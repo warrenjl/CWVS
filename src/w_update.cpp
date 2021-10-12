@@ -17,7 +17,8 @@ Rcpp::List w_update(arma::vec y,
 arma::vec mean_w = x*beta_old + 
                    z*(gamma_old%(A11_old*delta1_old));
 
-arma::vec w = rcpp_pgdraw(1.00,
+arma::vec input(1); input.fill(1.00);
+arma::vec w = rcpp_pgdraw(input,
                           mean_w);
 
 arma::vec gamma_l = (y - 0.50)/w;
