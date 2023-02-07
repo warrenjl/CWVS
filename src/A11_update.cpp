@@ -9,6 +9,7 @@ using namespace Rcpp;
 Rcpp::List A11_update(double A11_old,
                       arma::mat x,
                       arma::mat z,
+                      arma::vec off_set,
                       arma::vec w,
                       arma::vec gamma_l,
                       arma::vec beta,
@@ -22,6 +23,7 @@ Rcpp::List A11_update(double A11_old,
 double A11_trans_old = log(A11_old);
   
 arma::vec mean_piece_old = gamma_l - 
+                           off_set -
                            x*beta - 
                            z*(gamma%(A11_old*delta1));
 
@@ -33,6 +35,7 @@ double A11_trans = R::rnorm(A11_trans_old,
                             sqrt(metrop_var_A11_trans));
 double A11 = exp(A11_trans);
 arma::vec mean_piece = gamma_l - 
+                       off_set -
                        x*beta - 
                        z*(gamma%(A11*delta1));
 

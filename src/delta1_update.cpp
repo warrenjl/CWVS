@@ -8,6 +8,7 @@ using namespace Rcpp;
 
 arma::vec delta1_update(arma::mat x,
                         arma::mat z,
+                        arma::vec off_set,
                         arma::vec w,
                         arma::vec gamma_l,
                         arma::vec beta,
@@ -40,7 +41,7 @@ arma::mat cov_delta1 = inv_sympd(z_gamma_trans*(w_mat%z_gamma) +
                                  A21_old*A21_old*eye(p_z, p_z) + 
                                  corr_inv1);
 
-arma::vec mean_delta1 = cov_delta1*(z_gamma_trans*(w%(gamma_l - x*beta)) + 
+arma::vec mean_delta1 = cov_delta1*(z_gamma_trans*(w%(gamma_l - off_set - x*beta)) + 
                         A21_old*(gamma_star - A22_old*delta2_old));
 
 arma::mat ind_norms = arma::randn(1, p_z);

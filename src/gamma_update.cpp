@@ -8,6 +8,7 @@ using namespace Rcpp;
 
 arma::vec gamma_update(arma::mat x, 
                        arma::mat z,
+                       arma::vec off_set,
                        arma::vec w,
                        arma::vec gamma_l,
                        arma::vec beta,
@@ -44,7 +45,7 @@ for(int j = 0; j < p_z; ++j){
    for(int k = 0; k < 2; ++k){
       gamma(j) = k;
       alpha(j) = gamma(j)*(A11_old*delta1_old(j));
-      pieces(k) = -0.50*dot((gamma_l - x*beta - z*alpha), w%(gamma_l - x*beta - z*alpha)) +
+      pieces(k) = -0.50*dot((gamma_l - off_set - x*beta - z*alpha), w%(gamma_l - off_set - x*beta - z*alpha)) +
                   log_pi(k);
       }
 

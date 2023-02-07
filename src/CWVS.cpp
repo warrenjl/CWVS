@@ -15,6 +15,9 @@ Rcpp::List CWVS(int mcmc_samples,
                 double metrop_var_phi2_trans,
                 double metrop_var_A11_trans,
                 double metrop_var_A22_trans,
+                Rcpp::Nullable<Rcpp::NumericVector> offset = R_NilValue,
+                Rcpp::Nullable<double> a_r_prior = R_NilValue,
+                Rcpp::Nullable<double> b_r_prior = R_NilValue,
                 Rcpp::Nullable<double> a_sigma2_epsilon_prior = R_NilValue,
                 Rcpp::Nullable<double> b_sigma2_epsilon_prior = R_NilValue,
                 Rcpp::Nullable<double> sigma2_beta_prior = R_NilValue,
@@ -23,6 +26,7 @@ Rcpp::List CWVS(int mcmc_samples,
                 Rcpp::Nullable<double> alpha_phi2_prior = R_NilValue,
                 Rcpp::Nullable<double> beta_phi2_prior = R_NilValue,
                 Rcpp::Nullable<double> sigma2_A_prior = R_NilValue,
+                Rcpp::Nullable<double> r_init = R_NilValue,
                 Rcpp::Nullable<double> sigma2_epsilon_init = R_NilValue,
                 Rcpp::Nullable<Rcpp::NumericVector> beta_init = R_NilValue,
                 Rcpp::Nullable<Rcpp::NumericVector> gamma_init = R_NilValue,
@@ -35,9 +39,11 @@ Rcpp::List CWVS(int mcmc_samples,
                 Rcpp::Nullable<double> A21_init = R_NilValue){
 
 //Defining Parameters and Quantities of Interest
+int n = y.size();
 int p_x = x.n_cols;
 int p_z = z.n_cols;
 double max_time = (p_z - 1);
+arma::vec r(mcmc_samples); r.fill(0.00);
 arma::vec sigma2_epsilon(mcmc_samples); sigma2_epsilon.fill(0.00);
 arma::mat beta(p_x, mcmc_samples); beta.fill(0.00);
 arma::mat gamma(p_z, mcmc_samples); gamma.fill(0.00);
@@ -51,7 +57,22 @@ arma::vec A21(mcmc_samples); A21.fill(0.00);
 arma::mat alpha(p_z, mcmc_samples); alpha.fill(0.00);
 arma::vec neg_two_loglike(mcmc_samples); neg_two_loglike.fill(0.00);
 
+arma::vec off_set(n); off_set.fill(0.00);
+if(offset.isNotNull()){
+  off_set = Rcpp::as<arma::vec>(offset);
+  }
+
 //Prior Information
+int a_r = 1;
+if(a_r_prior.isNotNull()){
+  a_r = Rcpp::as<int>(a_r_prior);
+  }
+
+int b_r = 100;
+if(b_r_prior.isNotNull()){
+  b_r = Rcpp::as<int>(b_r_prior);
+  }
+
 double a_sigma2_epsilon = 0.01;
 if(a_sigma2_epsilon_prior.isNotNull()){
   a_sigma2_epsilon = Rcpp::as<double>(a_sigma2_epsilon_prior);
@@ -93,6 +114,11 @@ if(sigma2_A_prior.isNotNull()){
   }
 
 //Initial Values
+r(0) = b_r;
+if(r_init.isNotNull()){
+  r(0) = Rcpp::as<int>(r_init);
+  }
+
 sigma2_epsilon(0) = 1.00;
 if(sigma2_epsilon_init.isNotNull()){
   sigma2_epsilon(0) = Rcpp::as<double>(sigma2_epsilon_init);
@@ -148,7 +174,9 @@ Rcpp::List temporal_corr_info2 = temporal_corr_fun(p_z, phi2(0));
 neg_two_loglike(0) = neg_two_loglike_update(y,
                                             x,
                                             z, 
+                                            off_set,
                                             likelihood_indicator,
+                                            r(0),
                                             sigma2_epsilon(0),
                                             beta.col(0),
                                             gamma.col(0),
@@ -164,6 +192,23 @@ int acctot_A22_trans = 0;
 //Main Sampling Loop
 arma::vec w(y.size()); w.fill(0.00);
 arma::vec gamma_l = y;
+if(likelihood_indicator == 2){
+  
+  Rcpp::List w_output = w_update(y,
+                                 x,
+                                 z,
+                                 off_set,
+                                 likelihood_indicator,
+                                 r(0),
+                                 beta.col(0),
+                                 gamma.col(0),
+                                 A11(0),
+                                 delta1.col(0));
+  w = Rcpp::as<arma::vec>(w_output[0]);
+  gamma_l = Rcpp::as<arma::vec>(w_output[1]);
+  
+  }
+
 for(int j = 1; j < mcmc_samples; ++j){
   
    if(likelihood_indicator == 1){
@@ -188,6 +233,9 @@ for(int j = 1; j < mcmc_samples; ++j){
      Rcpp::List w_output = w_update(y,
                                     x,
                                     z,
+                                    off_set,
+                                    likelihood_indicator,
+                                    r(j-1),
                                     beta.col(j-1),
                                     gamma.col(j-1),
                                     A11(j-1),
@@ -201,6 +249,7 @@ for(int j = 1; j < mcmc_samples; ++j){
   //beta Update
   beta.col(j) = beta_update(x, 
                             z,
+                            off_set,
                             sigma2_beta,
                             w,
                             gamma_l,
@@ -211,6 +260,7 @@ for(int j = 1; j < mcmc_samples; ++j){
   //gamma Update
   gamma.col(j) = gamma_update(x, 
                               z,
+                              off_set,
                               w,
                               gamma_l,
                               beta.col(j),
@@ -231,6 +281,7 @@ for(int j = 1; j < mcmc_samples; ++j){
   //delta1 Update
   delta1.col(j) = delta1_update(x,
                                 z,
+                                off_set,
                                 w,
                                 gamma_l,
                                 beta.col(j),
@@ -279,6 +330,7 @@ for(int j = 1; j < mcmc_samples; ++j){
   Rcpp::List A11_output = A11_update(A11(j-1),
                                      x,
                                      z,
+                                     off_set,
                                      w,
                                      gamma_l,
                                      beta.col(j),
@@ -314,11 +366,43 @@ for(int j = 1; j < mcmc_samples; ++j){
   //alpha Update
   alpha.col(j) = gamma.col(j)%(A11(j)*delta1.col(j));
   
+  if(likelihood_indicator == 2){
+    
+    //r Update
+    r(j) = r_update(y,
+                    x,
+                    z,
+                    off_set,
+                    a_r,
+                    b_r,
+                    beta.col(j),
+                    gamma.col(j),
+                    A11(j),
+                    delta1.col(j));
+    
+    //w Update
+    Rcpp::List w_output = w_update(y,
+                                   x,
+                                   z,
+                                   off_set,
+                                   likelihood_indicator,
+                                   r(j),
+                                   beta.col(j),
+                                   gamma.col(j),
+                                   A11(j),
+                                   delta1.col(j));
+    w = Rcpp::as<arma::vec>(w_output[0]);
+    gamma_l = Rcpp::as<arma::vec>(w_output[1]);
+    
+    }
+  
   //neg_two_loglike Update
   neg_two_loglike(j) = neg_two_loglike_update(y,
                                               x,
                                               z, 
+                                              off_set,
                                               likelihood_indicator,
+                                              r(j),
                                               sigma2_epsilon(j),
                                               beta.col(j),
                                               gamma.col(j),
@@ -357,6 +441,7 @@ return Rcpp::List::create(Rcpp::Named("sigma2_epsilon") = sigma2_epsilon,
                           Rcpp::Named("A22") = A22,
                           Rcpp::Named("A21") = A21,
                           Rcpp::Named("alpha") = alpha,
+                          Rcpp::Named("r") = r,
                           Rcpp::Named("neg_two_loglike") = neg_two_loglike,
                           Rcpp::Named("acctot_phi1_trans") = acctot_phi1_trans,
                           Rcpp::Named("acctot_phi2_trans") = acctot_phi2_trans,
