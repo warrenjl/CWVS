@@ -25,24 +25,24 @@ A_{21} & A_{22} \end{array}\right];
 \]
 
 
-$$\boldsymbol{\delta}_k=\left\{\delta_k\left(1\right),...,\delta_k\left(m\right)\right\}^\text{T}|\phi_k \stackrel{\text{ind}}{\sim} \text{MVN}\left\{\textbf{0}_m, \Sigma\left(\phi_k\right)\right\},\ k=1,2;$$
+$$\boldsymbol{\delta}_k=\left\{\delta_k\left(1\right),...,\delta_k\left(m\right)\right\}^\text{T}|\phi_k \stackrel{\text{ind}}{\sim} \text{MVN}\left\{\textbf{0}_m, \Sigma\left(\phi_k\right)\right\},\ k=1,2.$$
 
 * $m = \max\left\{m_{i}: i=1,...,n\right\};$
 
 * $\boldsymbol{0}_m$: Length $m$ vector with each entry equal to zero.
 
 ## Prior Information
-$\beta_j \stackrel{\text{iid}}{\sim}\text{N}\left(0, \sigma^2_{\beta}\right),\ j=1,...,p;$
+$\beta_j \stackrel{\text{iid}}{\sim}\text{N}\left(0, \sigma^2_{\beta}\right),\ j=1,...,p.$
 
 * $p$: Length of $\textbf{x}_{ij}$ vector (same for all $i$, $j$);
 
 * Default setting: $\sigma^2_{\beta} = 10,000.$
 
-$\ln\left(A_{11}\right), \ln\left(A_{22}\right), A_{21} \stackrel{\text{iid}}{\sim}\text{N}\left(0, \sigma^2_A\right)$;
+$\ln\left(A_{11}\right), \ln\left(A_{22}\right), A_{21} \stackrel{\text{iid}}{\sim}\text{N}\left(0, \sigma^2_A\right)$.
 
 * Default setting: $\sigma^2_A = 1.00.$
 
-$\phi_k \stackrel{\text{iid}}{\sim}\text{Gamma}\left(\alpha_{\phi_k}, \beta_{\phi_k}\right),\ k=1,2;$
+$\phi_k \stackrel{\text{iid}}{\sim}\text{Gamma}\left(\alpha_{\phi_k}, \beta_{\phi_k}\right),\ k=1,2.$
 
 * Default setting: $\alpha_{\phi_k} = 1.00$, $\beta_{\phi_k} = 1.00,\ k=1,2.$
 
