@@ -10,6 +10,7 @@ Rcpp::List w_update(arma::vec y,
                     arma::mat x,
                     arma::mat z,
                     arma::vec off_set,
+                    arma::vec tri_als,
                     int likelihood_indicator,
                     int r,
                     arma::vec beta_old,
@@ -23,7 +24,7 @@ arma::vec mean_w = off_set +
                    x*beta_old + 
                    z*(gamma_old%(A11_old*delta1_old));
 
-arma::vec input0(1); input0.fill(1.00);
+arma::vec input0 = tri_als;
 arma::vec input2 = (r + y);
 
 arma::vec w(n); w.fill(0.00);
@@ -33,7 +34,7 @@ if(likelihood_indicator == 0){
   
   w = rcpp_pgdraw(input0,
                   mean_w);
-  gamma_l = (y - 0.50)/w;
+  gamma_l = (y - 0.50*tri_als)/w;
   
   } 
 

@@ -13,8 +13,8 @@ A22_update <- function(A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, m
     .Call(`_CWVS_A22_update`, A22_old, gamma_star, delta1, A21_old, delta2, sigma2_A, metrop_var_A22_trans, acctot_A22_trans)
 }
 
-CWVS <- function(mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, offset = NULL, a_r_prior = NULL, b_r_prior = NULL, a_sigma2_epsilon_prior = NULL, b_sigma2_epsilon_prior = NULL, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, r_init = NULL, sigma2_epsilon_init = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
-    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, offset, a_r_prior, b_r_prior, a_sigma2_epsilon_prior, b_sigma2_epsilon_prior, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, r_init, sigma2_epsilon_init, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
+CWVS <- function(mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, offset = NULL, trials = NULL, a_r_prior = NULL, b_r_prior = NULL, a_sigma2_epsilon_prior = NULL, b_sigma2_epsilon_prior = NULL, sigma2_beta_prior = NULL, alpha_phi1_prior = NULL, beta_phi1_prior = NULL, alpha_phi2_prior = NULL, beta_phi2_prior = NULL, sigma2_A_prior = NULL, r_init = NULL, sigma2_epsilon_init = NULL, beta_init = NULL, gamma_init = NULL, delta1_init = NULL, delta2_init = NULL, phi1_init = NULL, phi2_init = NULL, A11_init = NULL, A22_init = NULL, A21_init = NULL) {
+    .Call(`_CWVS_CWVS`, mcmc_samples, y, x, z, likelihood_indicator, metrop_var_phi1_trans, metrop_var_phi2_trans, metrop_var_A11_trans, metrop_var_A22_trans, offset, trials, a_r_prior, b_r_prior, a_sigma2_epsilon_prior, b_sigma2_epsilon_prior, sigma2_beta_prior, alpha_phi1_prior, beta_phi1_prior, alpha_phi2_prior, beta_phi2_prior, sigma2_A_prior, r_init, sigma2_epsilon_init, beta_init, gamma_init, delta1_init, delta2_init, phi1_init, phi2_init, A11_init, A22_init, A21_init)
 }
 
 beta_update <- function(x, z, off_set, sigma2_beta, w, gamma_l, gamma_old, A11_old, delta1_old) {
@@ -81,7 +81,7 @@ unif_rs <- function(a, b) {
     .Call(`_CWVS_unif_rs`, a, b)
 }
 
-w_update <- function(y, x, z, off_set, likelihood_indicator, r, beta_old, gamma_old, A11_old, delta1_old) {
-    .Call(`_CWVS_w_update`, y, x, z, off_set, likelihood_indicator, r, beta_old, gamma_old, A11_old, delta1_old)
+w_update <- function(y, x, z, off_set, tri_als, likelihood_indicator, r, beta_old, gamma_old, A11_old, delta1_old) {
+    .Call(`_CWVS_w_update`, y, x, z, off_set, tri_als, likelihood_indicator, r, beta_old, gamma_old, A11_old, delta1_old)
 }
 

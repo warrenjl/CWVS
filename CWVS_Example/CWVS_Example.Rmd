@@ -46,12 +46,13 @@ logit_p_true<-x%*%beta_true +
 z%*%alpha_true
 probs_true<-inv.logit(logit_p_true)
 hist(probs_true)
+trials<-rep(1, times = n)
 ```
 
 * Simulating the analysis dataset:
 ```{r echo=TRUE}
 y<-rbinom(n=n, 
-          size=1, 
+          size=trials, 
           prob=probs_true)
 ```
 
@@ -61,6 +62,7 @@ y<-rbinom(n=n,
 results<-CWVS(mcmc_samples = 10000,
               y = y, x = x, z = z,
               likelihood_indicator = 0,
+              trials = trials,
               metrop_var_phi1_trans = 1.00,
               metrop_var_phi2_trans = 1.00,
               metrop_var_A11_trans = 0.03,

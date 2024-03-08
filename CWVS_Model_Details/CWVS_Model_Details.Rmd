@@ -7,7 +7,7 @@ output:
 # CWVS: Critical Window Variable Selection
 
 ## Statistical Model
-$$Y_{i}|\boldsymbol{\beta}, \boldsymbol{\alpha} \stackrel{\text{ind}}{\sim} \text{Bernoulli}\left\{p_{i}\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\right)\right\},\ i=1,...,n;$$
+$$Y_{i}|\boldsymbol{\beta}, \boldsymbol{\alpha} \stackrel{\text{ind}}{\sim} \text{Binomial}\left\{c_i, p_{i}\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\right)\right\},\ i=1,...,n;$$
 
 $$\log\left\{\frac{p_{i}\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\right)}{1 - p_{i}\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\right)}\right\} = \textbf{x}_{i}^{\text{T}} \boldsymbol{\beta} + \sum_{j=1}^{m_{i}} \text{z}_{ij} \alpha\left(j\right);$$
 
@@ -80,7 +80,7 @@ $\text{ln}\left\{\frac{\lambda_i\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\ri
 * Default initial value: $r = b_r$.
 
 ## Likelihood Indicator
-* likelihood_indicator $= 0$: Bernoulli; 
+* likelihood_indicator $= 0$: Binomial; 
 
 * likelihood_indicator $= 1$: Gaussian;
 
