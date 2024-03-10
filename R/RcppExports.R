@@ -45,8 +45,8 @@ half_norm_rs <- function(a, b) {
     .Call(`_CWVS_half_norm_rs`, a, b)
 }
 
-neg_two_loglike_update <- function(y, x, z, off_set, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1) {
-    .Call(`_CWVS_neg_two_loglike_update`, y, x, z, off_set, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1)
+neg_two_loglike_update <- function(y, x, z, off_set, tri_als, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1) {
+    .Call(`_CWVS_neg_two_loglike_update`, y, x, z, off_set, tri_als, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1)
 }
 
 norm_rs <- function(a, b) {

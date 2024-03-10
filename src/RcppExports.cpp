@@ -227,8 +227,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // neg_two_loglike_update
-double neg_two_loglike_update(arma::vec y, arma::mat x, arma::mat z, arma::vec off_set, int likelihood_indicator, int r, double sigma2_epsilon, arma::vec beta, arma::vec gamma, double A11, arma::vec delta1);
-RcppExport SEXP _CWVS_neg_two_loglike_update(SEXP ySEXP, SEXP xSEXP, SEXP zSEXP, SEXP off_setSEXP, SEXP likelihood_indicatorSEXP, SEXP rSEXP, SEXP sigma2_epsilonSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP A11SEXP, SEXP delta1SEXP) {
+double neg_two_loglike_update(arma::vec y, arma::mat x, arma::mat z, arma::vec off_set, arma::vec tri_als, int likelihood_indicator, int r, double sigma2_epsilon, arma::vec beta, arma::vec gamma, double A11, arma::vec delta1);
+RcppExport SEXP _CWVS_neg_two_loglike_update(SEXP ySEXP, SEXP xSEXP, SEXP zSEXP, SEXP off_setSEXP, SEXP tri_alsSEXP, SEXP likelihood_indicatorSEXP, SEXP rSEXP, SEXP sigma2_epsilonSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP A11SEXP, SEXP delta1SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -236,6 +236,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type z(zSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type off_set(off_setSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type tri_als(tri_alsSEXP);
     Rcpp::traits::input_parameter< int >::type likelihood_indicator(likelihood_indicatorSEXP);
     Rcpp::traits::input_parameter< int >::type r(rSEXP);
     Rcpp::traits::input_parameter< double >::type sigma2_epsilon(sigma2_epsilonSEXP);
@@ -243,7 +244,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type gamma(gammaSEXP);
     Rcpp::traits::input_parameter< double >::type A11(A11SEXP);
     Rcpp::traits::input_parameter< arma::vec >::type delta1(delta1SEXP);
-    rcpp_result_gen = Rcpp::wrap(neg_two_loglike_update(y, x, z, off_set, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1));
+    rcpp_result_gen = Rcpp::wrap(neg_two_loglike_update(y, x, z, off_set, tri_als, likelihood_indicator, r, sigma2_epsilon, beta, gamma, A11, delta1));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -399,7 +400,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_CWVS_gamma_star_update", (DL_FUNC) &_CWVS_gamma_star_update, 5},
     {"_CWVS_gamma_update", (DL_FUNC) &_CWVS_gamma_update, 12},
     {"_CWVS_half_norm_rs", (DL_FUNC) &_CWVS_half_norm_rs, 2},
-    {"_CWVS_neg_two_loglike_update", (DL_FUNC) &_CWVS_neg_two_loglike_update, 11},
+    {"_CWVS_neg_two_loglike_update", (DL_FUNC) &_CWVS_neg_two_loglike_update, 12},
     {"_CWVS_norm_rs", (DL_FUNC) &_CWVS_norm_rs, 2},
     {"_CWVS_phi_update", (DL_FUNC) &_CWVS_phi_update, 7},
     {"_CWVS_r_update", (DL_FUNC) &_CWVS_r_update, 10},
