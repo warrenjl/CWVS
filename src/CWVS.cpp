@@ -17,6 +17,7 @@ Rcpp::List CWVS(int mcmc_samples,
                 double metrop_var_A22_trans,
                 Rcpp::Nullable<Rcpp::NumericVector> offset = R_NilValue,
                 Rcpp::Nullable<Rcpp::NumericVector> trials = R_NilValue,
+                Rcpp::Nullable<Rcpp::NumericVector> pair_id = R_NilValue,
                 Rcpp::Nullable<double> a_r_prior = R_NilValue,
                 Rcpp::Nullable<double> b_r_prior = R_NilValue,
                 Rcpp::Nullable<double> a_sigma2_epsilon_prior = R_NilValue,
@@ -40,6 +41,50 @@ Rcpp::List CWVS(int mcmc_samples,
                 Rcpp::Nullable<double> A21_init = R_NilValue){
 
 //Defining Parameters and Quantities of Interest
+if(likelihood_indicator == 3){
+  
+  arma::vec pair_id_vec = Rcpp::as<arma::vec>(pair_id);
+  
+  arma::vec unique_pairs = arma::unique(pair_id_vec);
+  int n_temp = unique_pairs.n_elem;
+  
+  arma::vec y_temp(n_temp); y_temp.fill(1);
+  
+  int p_x_temp = x.n_cols - 1;
+  arma::mat x_temp(n_temp, p_x_temp);
+  
+  int p_z_temp = z.n_cols;
+  arma::mat z_temp(n_temp, p_z_temp);
+  
+  for(int i = 0; i < n_temp; ++i){
+    
+    arma::uvec pair_indices = arma::find(pair_id_vec == unique_pairs(i));
+    
+    int idx1 = pair_indices(0);
+    int idx2 = pair_indices(1);
+    
+    int case_idx, control_idx;
+    if((y(idx1) == 1) && (y(idx2) == 0)){
+      case_idx = idx1;
+      control_idx = idx2;
+      }else if((y(idx1) == 0) && (y(idx2) == 1)){
+      case_idx = idx2;
+      control_idx = idx1;
+      }
+    
+    x_temp.row(i) = x.row(case_idx).cols(1, x.n_cols - 1) - x.row(control_idx).cols(1, x.n_cols - 1);
+    
+    z_temp.row(i) = z.row(case_idx) - z.row(control_idx);
+    
+    }
+  
+  y = y_temp;
+  x = x_temp;
+  z = z_temp;
+  likelihood_indicator = 0;
+  
+  }
+  
 int n = y.size();
 int p_x = x.n_cols;
 int p_z = z.n_cols;

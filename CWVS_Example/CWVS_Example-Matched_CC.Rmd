@@ -1,0 +1,107 @@
+---
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# CWVS: Critical Window Variable Selection
+## CWVS_Example
+
+[1] Simulate data for analysis:
+
+* Setting the reproducibility seed and initializing packages for data simulation:
+```{r}
+set.seed(4679)
+library(CWVS)
+library(boot)  #Inverse logit transformation
+```
+
+* Setting the global data values:
+```{r}
+n<-50000  #Sample size
+m<-27  #Number of exposure time periods
+x<-matrix(1,
+nrow=n,
+ncol=2)  #Covariate design matrix
+x[,2]<-scale(rnorm(n))
+
+z<-matrix(rnorm(n=(n*m)),
+nrow=n,
+ncol=m)  #Exposure design matrix
+for(j in 1:m){
+z[,j]<-(z[,j] - median(z[,j]))/IQR(z[,j])  #Data standardization (interquartile range)
+}
+```
+
+* Setting the values for the statistical model parameters:
+```{r}
+beta_true<-c(-3.20, 0.10)
+theta_true<-rep(0.60, times=m)
+gamma_true<-c(rep(0, times=12),
+rep(1, times=4),
+rep(0, times=11))
+alpha_true<-gamma_true*theta_true
+logit_p_true<-x%*%beta_true +
+z%*%alpha_true
+probs_true<-inv.logit(logit_p_true)
+hist(probs_true)
+trials<-rep(1, times = n)
+```
+
+* Simulating the analysis dataset:
+```{r echo=TRUE}
+y<-rbinom(n=n, 
+          size=trials, 
+          prob=probs_true)
+```
+
+* Creating matched case-control data:
+```{r}
+cases<-c(1:n)[y == 1]
+controls<-c(1:n)[y == 0][1:length(cases)]
+final_set<-c(cases,
+             controls)
+y<-y[final_set]
+
+x<-x[final_set,]
+
+z<-z[final_set,]
+
+pair_id<-rep(c(1:length(cases)), times = 2)
+```
+
+[2] Fit CWVS to identify/estimate critical windows of susceptibility:
+
+```{r echo=TRUE}
+results<-CWVS(mcmc_samples = 10000,
+              y = y, x = x, z = z,
+              likelihood_indicator = 3,
+              pair_id = pair_id,
+              metrop_var_phi1_trans = 1.00,
+              metrop_var_phi2_trans = 1.00,
+              metrop_var_A11_trans = 0.03,
+              metrop_var_A22_trans = 0.30)
+
+plot(results$beta[1, 1001:10000],
+     type="l",
+     ylab="beta",
+     xlab="Sample")
+abline(h=beta_true[2],
+       col="red",
+       lwd=2)  #True value
+plot(rowMeans(results$alpha[,1001:10000]),
+              pch=16,
+              ylab="alpha",
+              xlab="Time")
+points(alpha_true, 
+       col="red")
+plot(rowMeans(results$gamma[,1001:10000]),
+     pch=16,
+     ylab="gamma",
+     xlab="Time")
+points(gamma_true, 
+       col="red")
+```
