@@ -79,9 +79,27 @@ $\text{ln}\left\{\frac{\lambda_i\left(\boldsymbol{\beta}, \boldsymbol{\alpha}\ri
 
 * Default initial value: $r = b_r$.
 
+## Alternate Likelihood: Conditional Logistic Regression
+For $1{:}1$ matched case-control data, let $k=1,...,K$ index matched pairs, with $\textbf{x}_{ki}$ and $\textbf{z}_{ki}$ denoting the covariate vectors for subject $i \in \{0,1\}$ (control, case) within pair $k$. The conditional likelihood, obtained by conditioning on the event that exactly one member of each pair is a case, is given as:
+
+\begin{align*}
+P\left(Y_{k1} = 1 | Y_{k0} + Y_{k1} = 1, \boldsymbol{\beta}, \boldsymbol{\alpha}\right) &= \frac{\exp\left\{\eta_{k1}\right\}}{\exp\left\{\eta_{k1}\right\} + \exp\left\{\eta_{k0}\right\}},\ k=1,...,K; \\
+\eta_{ki} &= \textbf{x}_{ki}^{\text{T}} \boldsymbol{\beta} + \sum_{j=1}^{m_k} \text{z}_{kij}\,\alpha\left(j\right),\ i \in \{0,1\}.
+\end{align*}
+
+\begin{itemize}
+
+\item $\boldsymbol{\beta}$ excludes any intercept term (not identifiable under conditional likelihood, since it cancels within each matched pair);
+
+\item No additional parameters are introduced for this likelihood.
+
+\end{itemize}
+
 ## Likelihood Indicator
 * likelihood_indicator $= 0$: Binomial; 
 
 * likelihood_indicator $= 1$: Gaussian;
 
-* likelihood_indicator $= 2$: Negative binomial.
+* likelihood_indicator $= 2$: Negative binomial;
+
+* likelihood_indicator $= 3$: Conditional logistic regression (requires `pair_id`, a vector of integers identifying $1{:}1$ matched pairs).
